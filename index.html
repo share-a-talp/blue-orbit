@@ -10,12 +10,10 @@
             theme: {
                 extend: {
                     colors: {
-                        brandDarkBlue: '#23297a', 
+                        brandDarkBlue: '#0b0d1b', 
+                        brandCardDark: '#13162c',
                         brandCyan: '#00aeef',
                         brandLime: '#8dc63f',
-                        brandBlack: '#0b0c16',
-                        brandGrayBg: '#f8fafc',
-                        brandCardDark: '#131526'
                     }
                 }
             }
@@ -23,22 +21,39 @@
     </script>
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
     <style>
-        body { font-family: "Pretendard Variable", Pretendard, sans-serif; }
+        body { font-family: "Pretendard Variable", Pretendard, sans-serif; background-color: #0b0d1b; color: #ffffff; }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* 레퍼런스 이미지의 무한대 네온 루프 이펙트 */
+        .neon-bg {
+            position: absolute;
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 700px;
+            height: 350px;
+            background: linear-gradient(90deg, #00aeef, #8dc63f, #00aeef);
+            background-size: 200% auto;
+            filter: blur(150px);
+            opacity: 0.22;
+            border-radius: 100px;
+            z-index: 0;
+            pointer-events: none;
+        }
     </style>
 </head>
-<body id="main-body" class="antialiased break-keep min-h-screen flex flex-col justify-between transition-colors duration-500">
+<body class="antialiased break-keep min-h-screen flex flex-col justify-between">
 
     <!-- GLOBAL HEADER & NAVIGATION -->
-    <header id="main-header" class="sticky top-0 z-50 border-b transition-colors duration-500">
+    <header class="sticky top-0 z-50 bg-brandDarkBlue/90 backdrop-blur-md border-b border-gray-950">
         <div class="max-w-screen-md mx-auto px-4">
             <!-- Top Logo Row -->
             <div class="flex items-center justify-between py-4">
                 <button onclick="switchTab('main')" class="flex items-center gap-2 focus:outline-none">
-                    <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M7 9C4.79086 9 3 10.7909 3 13C3 15.2091 4.79086 17 7 17C8.73699 17 10.2222 15.8913 10.7656 14.3359L13.2344 9.6641C13.7778 8.10872 15.263 7 17 7C19.2091 7 21 8.79086 21 11C21 13.2091 19.2091 15 17 15C15.263 15 13.7778 13.8913 13.2344 12.3359L10.7656 7.6641C10.2222 6.10872 8.73699 5 7 5C4.79086 5 3 6.79086 3 9Z" stroke="url(#logo-grad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
                         <defs>
                             <linearGradient id="logo-grad" x1="3" y1="5" x2="21" y2="17" gradientUnits="userSpaceOnUse">
@@ -47,31 +62,31 @@
                             </linearGradient>
                         </defs>
                     </svg>
-                    <span id="logo-text" class="font-extrabold text-lg tracking-tight transition-colors">BLUE ORBIT</span>
+                    <span class="font-extrabold text-base tracking-tight text-white">BLUE ORBIT</span>
                 </button>
-                <div id="time-badge" class="text-[11px] font-bold px-2.5 py-1 rounded-full border transition-all">
-                    시간 동기화 중...
+                <div class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-gray-900 border border-gray-850 text-brandCyan">
+                    PRO ACTIVE AI SYSTEM
                 </div>
             </div>
 
             <!-- Tab List (Total 6 Tabs, No Numbering) -->
-            <nav class="flex gap-1 overflow-x-auto no-scrollbar border-t pt-1" role="tablist">
-                <button onclick="switchTab('main')" id="tab-btn-main" class="tab-btn flex-none px-4 py-3 text-center text-sm font-bold border-b-2 transition-all whitespace-nowrap" role="tab">
+            <nav class="flex gap-1 overflow-x-auto no-scrollbar border-t border-gray-950 pt-1" role="tablist">
+                <button onclick="switchTab('main')" id="tab-btn-main" class="tab-btn flex-none px-4 py-3 text-center text-sm font-bold border-b-2 border-brandCyan text-brandCyan transition-all whitespace-nowrap" role="tab">
                     개요
                 </button>
-                <button onclick="switchTab('tab1')" id="tab-btn-tab1" class="tab-btn flex-none px-4 py-3 text-center text-sm font-medium border-b-2 border-transparent transition-all whitespace-nowrap" role="tab">
+                <button onclick="switchTab('tab1')" id="tab-btn-tab1" class="tab-btn flex-none px-4 py-3 text-center text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-300 transition-all whitespace-nowrap" role="tab">
                     문제 인식
                 </button>
-                <button onclick="switchTab('tab2')" id="tab-btn-tab2" class="tab-btn flex-none px-4 py-3 text-center text-sm font-medium border-b-2 border-transparent transition-all whitespace-nowrap" role="tab">
+                <button onclick="switchTab('tab2')" id="tab-btn-tab2" class="tab-btn flex-none px-4 py-3 text-center text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-300 transition-all whitespace-nowrap" role="tab">
                     판매 구조
                 </button>
-                <button onclick="switchTab('tab3')" id="tab-btn-tab3" class="tab-btn flex-none px-4 py-3 text-center text-sm font-medium border-b-2 border-transparent transition-all whitespace-nowrap" role="tab">
+                <button onclick="switchTab('tab3')" id="tab-btn-tab3" class="tab-btn flex-none px-4 py-3 text-center text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-300 transition-all whitespace-nowrap" role="tab">
                     전략 설계
                 </button>
-                <button onclick="switchTab('tab4')" id="tab-btn-tab4" class="tab-btn flex-none px-4 py-3 text-center text-sm font-medium border-b-2 border-transparent transition-all whitespace-nowrap" role="tab">
+                <button onclick="switchTab('tab4')" id="tab-btn-tab4" class="tab-btn flex-none px-4 py-3 text-center text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-300 transition-all whitespace-nowrap" role="tab">
                     진단 확인
                 </button>
-                <button onclick="switchTab('contact')" id="tab-btn-contact" class="tab-btn flex-none px-4 py-3 text-center text-sm font-medium border-b-2 border-transparent transition-all whitespace-nowrap" role="tab">
+                <button onclick="switchTab('contact')" id="tab-btn-contact" class="tab-btn flex-none px-4 py-3 text-center text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-300 transition-all whitespace-nowrap" role="tab">
                     문의하기
                 </button>
             </nav>
@@ -79,129 +94,94 @@
     </header>
 
     <!-- MAIN CONTENT AREA -->
-    <main class="flex-grow flex items-center py-10 sm:py-16">
+    <main class="flex-grow flex items-center">
         <div class="w-full">
             
-            <!-- TAB: MAIN (STRATEGY DECK OVERVIEW + CONTENT 01 SUMMARY) -->
-            <div id="content-main" class="tab-content active max-w-screen-md mx-auto px-6">
-                <div class="space-y-2 mb-8">
-                    <span class="text-xs uppercase tracking-widest font-extrabold text-brandCyan">Executive Brief</span>
-                    <h1 id="main-hero-title" class="text-3xl sm:text-5xl font-black tracking-tight leading-tight transition-colors">
-                        시장 관점을 바꾸는<br><span class="text-brandCyan">구매 욕구 재설계</span> 전략
-                    </h1>
-                </div>
+            <!-- TAB: MAIN (레퍼런스 이미지 "image_f49ee5.png" 스타일 단독 구현) -->
+            <div id="content-main" class="tab-content active relative min-h-[75vh] flex flex-col justify-center items-center text-center px-6 overflow-hidden">
+                <div class="neon-bg"></div>
                 
-                <p id="main-hero-desc" class="text-base sm:text-lg leading-relaxed max-w-xl mb-12 transition-colors">
-                    블루오빗은 무작정 제품의 기능이나 디자인을 고치지 않습니다. 고객이 왜 지금 사야 하는지 명확한 이유를 추적하고, 끊어진 판매 흐름의 본질적인 마찰 지점을 진단하여 구조적인 실행 전략을 재정의합니다.
-                </p>
-
-                <!-- Dashboard Grid -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div id="main-card-1" class="p-6 rounded-2xl border transition-all cursor-pointer hover:scale-[1.01]" onclick="switchTab('tab1')">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="text-xs font-mono font-bold text-gray-400">PHASE 01</span>
-                            <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-red-500/10 text-red-500">진단 지표</span>
-                        </div>
-                        <h3 class="text-lg font-bold mb-2">구매 욕구 자극 실패</h3>
-                        <p class="text-xs sm:text-sm text-gray-400 leading-relaxed">초기 반응 약화, 흐려진 구매 이유, 경쟁사 메시지 동조화 현상으로 인한 이탈 요인 분석.</p>
-                        <div class="mt-4 text-xs font-semibold text-brandCyan flex items-center gap-1">상세 분석 보기 &rarr;</div>
-                    </div>
-
-                    <div id="main-card-2" class="p-6 rounded-2xl border transition-all cursor-pointer hover:scale-[1.01]" onclick="switchTab('tab2')">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="text-xs font-mono font-bold text-gray-400">PHASE 02</span>
-                            <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-brandCyan/10 text-brandCyan">진단 영역</span>
-                        </div>
-                        <h3 class="text-lg font-bold mb-2">판매 구조 전면 점검</h3>
-                        <p class="text-xs sm:text-sm text-gray-400 leading-relaxed">광고, 상세페이지, 상담 파이프라인 중 고객 유입 및 전환이 단절되는 마찰 구간 추적.</p>
-                        <div class="mt-4 text-xs font-semibold text-brandCyan flex items-center gap-1">상세 분석 보기 &rarr;</div>
-                    </div>
-
-                    <div id="main-card-3" class="p-6 rounded-2xl border transition-all cursor-pointer hover:scale-[1.01]" onclick="switchTab('tab3')">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="text-xs font-mono font-bold text-gray-400">PHASE 03</span>
-                            <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-brandLime/10 text-brandLime">전략 도출</span>
-                        </div>
-                        <h3 class="text-lg font-bold mb-2">전략 구조 새 설계</h3>
-                        <p class="text-xs sm:text-sm text-gray-400 leading-relaxed">제품 관점 변경을 통해 시장이 스스로 찾아오는 프레임 구축 및 액션 플랜 수립.</p>
-                        <div class="mt-4 text-xs font-semibold text-brandCyan flex items-center gap-1">상세 분석 보기 &rarr;</div>
-                    </div>
-
-                    <div id="main-card-4" class="p-6 rounded-2xl border transition-all cursor-pointer hover:scale-[1.01]" onclick="switchTab('tab4')">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="text-xs font-mono font-bold text-gray-400">PHASE 04</span>
-                            <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-purple-500/10 text-purple-500">실행 제안</span>
-                        </div>
-                        <h3 class="text-lg font-bold mb-2">흐름 진단 및 최적화</h3>
-                        <p class="text-xs sm:text-sm text-gray-400 leading-relaxed">막혀 있는 판매 흐름을 관통할 기준 재설계 및 맞춤형 솔루션 도출 검토.</p>
-                        <div class="mt-4 text-xs font-semibold text-brandCyan flex items-center gap-1">상세 분석 보기 &rarr;</div>
+                <div class="relative z-10 max-w-3xl mx-auto space-y-6">
+                    <h1 class="text-3xl sm:text-5xl font-black tracking-tight leading-[1.25] text-white">
+                        지금 판매 흐름의<br>어디가 막혔는지 확인하세요
+                    </h1>
+                    
+                    <p class="text-gray-400 text-sm sm:text-lg font-medium max-w-xl mx-auto leading-relaxed pt-2">
+                        시장이 제품을 선택하는 기준은 이미 바뀌었을 수 있습니다.<br>
+                        블루오빗과 함께 구매 이유를 재설계하십시오.
+                    </p>
+                    
+                    <div class="pt-8">
+                        <button onclick="switchTab('contact')" class="w-full sm:w-[540px] text-center bg-gradient-to-r from-brandCyan to-brandLime hover:opacity-90 text-brandDarkBlue font-black px-8 py-4 rounded-full transition-all text-base tracking-wide shadow-lg shadow-cyan-500/10">
+                            제품 판매 구조 진단 요청
+                        </button>
                     </div>
                 </div>
             </div>
 
             <!-- TAB 1: 문제 인식 -->
-            <div id="content-tab1" class="tab-content max-w-screen-md mx-auto px-6">
+            <div id="content-tab1" class="tab-content max-w-screen-md mx-auto px-6 py-12">
                 <div class="flex items-center gap-3 mb-6">
                     <div class="w-8 h-[2px] bg-brandCyan"></div>
                     <span class="text-brandCyan font-bold text-xs uppercase tracking-wider">Analysis</span>
                 </div>
-                <h2 id="title-tab1" class="text-2xl sm:text-4xl font-extrabold leading-tight tracking-tight mb-6">
+                <h2 class="text-2xl sm:text-4xl font-extrabold leading-tight tracking-tight mb-6 text-white">
                     제품 효용성이 아닌<br>구매 욕구 자극이 문제입니다
                 </h2>
-                <p id="desc-tab1" class="text-base sm:text-lg leading-relaxed mb-10 max-w-xl">
+                <p class="text-base sm:text-lg text-gray-400 leading-relaxed mb-10 max-w-xl">
                     소비자의 변화하는 욕구를 따라가지 못하는 판매구조가 문제입니다. 제품 개선은 소비욕구를 자극한 후에 이루어져야 합니다.
                 </p>
                 <div class="space-y-4">
-                    <div id="tab1-card-1" class="p-6 rounded-2xl border transition-all">
-                        <h3 class="text-lg font-bold mb-2">초기 반응 약화</h3>
-                        <p id="tab1-p-1" class="text-sm">초기에는 반응했지만 지금은 같은 메시지에 구매가 일어나지 않습니다.</p>
+                    <div class="p-6 bg-brandCardDark border border-gray-900 rounded-2xl">
+                        <h3 class="text-lg font-bold mb-2 text-white">초기 반응 약화</h3>
+                        <p class="text-sm text-gray-400">초기에는 반응했지만 지금은 같은 메시지에 구매가 일어나지 않습니다.</p>
                     </div>
-                    <div id="tab1-card-2" class="p-6 rounded-2xl border transition-all">
-                        <h3 class="text-lg font-bold mb-2">구매 이유 흐림</h3>
-                        <p id="tab1-p-2" class="text-sm">고객이 왜 지금 사야 하는지 바로 이해하지 못합니다.</p>
+                    <div class="p-6 bg-brandCardDark border border-gray-900 rounded-2xl">
+                        <h3 class="text-lg font-bold mb-2 text-white">구매 이유 흐림</h3>
+                        <p class="text-sm text-gray-400">고객이 왜 지금 사야 하는지 바로 이해하지 못합니다.</p>
                     </div>
-                    <div id="tab1-card-3" class="p-6 rounded-2xl border transition-all">
-                        <h3 class="text-lg font-bold mb-2">경쟁 메시지 동조화</h3>
-                        <p id="tab1-p-3" class="text-sm">경쟁사와 비슷한 설명이 반복되면 가격 비교와 이탈로 이어집니다.</p>
+                    <div class="p-6 bg-brandCardDark border border-gray-900 rounded-2xl">
+                        <h3 class="text-lg font-bold mb-2 text-white">경쟁 메시지 동조화</h3>
+                        <p class="text-sm text-gray-400">경쟁사와 비슷한 설명이 반복되면 가격 비교와 이탈로 이어집니다.</p>
                     </div>
                 </div>
             </div>
 
             <!-- TAB 2: 판매 구조 -->
-            <div id="content-tab2" class="tab-content max-w-screen-md mx-auto px-6">
+            <div id="content-tab2" class="tab-content max-w-screen-md mx-auto px-6 py-12">
                 <div class="flex items-center gap-3 mb-6">
                     <div class="w-8 h-[2px] bg-brandCyan"></div>
                     <span class="text-brandCyan font-bold text-xs uppercase tracking-wider">Audit</span>
                 </div>
-                <h2 id="title-tab2" class="text-2xl sm:text-4xl font-extrabold leading-tight tracking-tight mb-6">
+                <h2 class="text-2xl sm:text-4xl font-extrabold leading-tight tracking-tight mb-6 text-white">
                     제품을 바꾸기 전에,<br>판매 구조를 다시 점검해야 합니다.
                 </h2>
-                <div id="desc-tab2" class="text-base sm:text-lg leading-relaxed space-y-4 mb-10 max-w-xl">
+                <div class="text-base sm:text-lg text-gray-400 leading-relaxed space-y-4 mb-10 max-w-xl">
                     <p>블루오빗은 기능이나 디자인을 먼저 고치지 않습니다.</p>
                     <p>고객이 제품을 어떻게 받아들이고 있는지, 왜 구매욕구가 약한지 먼저 진단합니다.</p>
                 </div>
-                <div id="tab2-container" class="p-6 sm:p-8 rounded-2xl border space-y-6">
+                <div class="p-6 sm:p-8 bg-brandCardDark border border-gray-900 rounded-2xl space-y-6">
                     <div>
                         <span class="text-brandCyan font-mono text-xs block mb-1">AUDIT 01</span>
-                        <h3 class="text-lg font-bold mb-2">현재 반응 확인</h3>
-                        <p id="tab2-p-1" class="text-sm">광고·상세페이지·상담 중 어디서 고객반응이 끊기는지 점검합니다.</p>
+                        <h3 class="text-lg font-bold mb-2 text-white">현재 반응 확인</h3>
+                        <p class="text-sm text-gray-400">광고·상세페이지·상담 중 어디서 고객반응이 끊기는지 점검합니다.</p>
                     </div>
-                    <hr id="tab2-hr" class="border-t">
+                    <hr class="border-t border-gray-800">
                     <div>
                         <span class="text-brandCyan font-mono text-xs block mb-1">AUDIT 02</span>
-                        <h3 class="text-lg font-bold mb-2">구매 이유 추출</h3>
-                        <p id="tab2-p-2" class="text-sm">실제 구매 고객이 어떤 말에 반응했는지, 무엇이 결정을 만들었는지 확인합니다.</p>
+                        <h3 class="text-lg font-bold mb-2 text-white">구매 이유 추출</h3>
+                        <p class="text-sm text-gray-400">실제 구매 고객이 어떤 말에 반응했는지, 무엇이 결정을 만들었는지 확인합니다.</p>
                     </div>
                 </div>
             </div>
 
             <!-- TAB 3: 전략 설계 -->
-            <div id="content-tab3" class="tab-content max-w-screen-md mx-auto px-6">
+            <div id="content-tab3" class="tab-content max-w-screen-md mx-auto px-6 py-12">
                 <div class="flex items-center gap-3 mb-6">
                     <div class="w-8 h-[2px] bg-brandCyan"></div>
                     <span class="text-brandCyan font-bold text-xs uppercase tracking-wider">Architecture</span>
                 </div>
-                <h2 id="title-tab3" class="text-2xl sm:text-4xl font-extrabold leading-tight tracking-tight mb-6">
+                <h2 class="text-2xl sm:text-4xl font-extrabold leading-tight tracking-tight mb-6 text-white">
                     진단 결과로<br>판매 전략 구조를<br>새롭게 설계합니다
                 </h2>
                 <div class="text-brandCyan text-base sm:text-lg leading-relaxed space-y-2 mb-10 max-w-xl font-medium">
@@ -209,65 +189,65 @@
                     <p>시장이 자연스럽게 제품에 집중하도록 바로 실행 가능한 액션을 함께 만들어 드립니다.</p>
                 </div>
                 <div class="space-y-3">
-                    <div id="tab3-card-1" class="p-5 rounded-xl border flex items-center justify-between">
-                        <span class="font-bold text-base">반응 구조 진단</span>
+                    <div class="p-5 bg-brandCardDark border border-gray-900 rounded-xl flex items-center justify-between">
+                        <span class="font-bold text-base text-white">반응 구조 진단</span>
                         <span class="text-brandCyan text-xs tracking-wider font-mono">DIAGNOSIS</span>
                     </div>
-                    <div id="tab3-card-2" class="p-5 rounded-xl border flex items-center justify-between">
-                        <span class="font-bold text-base">구매 이유 재정의</span>
+                    <div class="p-5 bg-brandCardDark border border-gray-900 rounded-xl flex items-center justify-between">
+                        <span class="font-bold text-base text-white">구매 이유 재정의</span>
                         <span class="text-brandCyan text-xs tracking-wider font-mono">REDEFINE</span>
                     </div>
-                    <div id="tab3-card-3" class="p-5 rounded-xl border flex items-center justify-between">
-                        <span class="font-bold text-base">판매 전략 구조 설계</span>
+                    <div class="p-5 bg-brandCardDark border border-gray-900 rounded-xl flex items-center justify-between">
+                        <span class="font-bold text-base text-white">판매 전략 구조 설계</span>
                         <span class="text-brandLime text-xs tracking-wider font-mono">ARCHITECTURE</span>
                     </div>
                 </div>
             </div>
 
             <!-- TAB 4: 진단 확인 -->
-            <div id="content-tab4" class="tab-content max-w-screen-md mx-auto px-6">
+            <div id="content-tab4" class="tab-content max-w-screen-md mx-auto px-6 py-12">
                 <div class="flex items-center gap-3 mb-6">
                     <div class="w-8 h-[2px] bg-brandCyan"></div>
                     <span class="text-brandCyan font-bold text-xs uppercase tracking-wider">Verification</span>
                 </div>
-                <h2 id="title-tab4" class="text-2xl sm:text-4xl font-extrabold leading-tight tracking-tight mb-6">
+                <h2 class="text-2xl sm:text-4xl font-extrabold leading-tight tracking-tight mb-6 text-white">
                     지금 판매 흐름의<br>어디가 막혔는지,<br>먼저 확인해보세요
                 </h2>
-                <p id="desc-tab4" class="text-base sm:text-lg leading-relaxed mb-8 max-w-xl">
+                <p class="text-base sm:text-lg text-gray-400 leading-relaxed mb-8 max-w-xl">
                     시장이 제품 선택하는 기준이 바뀌었을 수 있습니다. 구매 이유와 판매 흐름을 진단하고, 실행 전략을 함께 제안합니다.
                 </p>
-                <button onclick="switchTab('contact')" class="w-full sm:w-auto text-center bg-brandCyan hover:bg-cyan-600 text-brandBlack font-extrabold px-8 py-4 rounded-xl transition-all shadow-lg shadow-cyan-500/20 text-base">
+                <button onclick="switchTab('contact')" class="w-full sm:w-auto text-center bg-gradient-to-r from-brandCyan to-brandLime hover:opacity-90 text-brandDarkBlue font-extrabold px-8 py-4 rounded-xl transition-all text-base">
                     구조 진단 프로세스 시작하기
                 </button>
             </div>
 
             <!-- TAB 5: CONTACT (문의하기) -->
-            <div id="content-contact" class="tab-content max-w-screen-md mx-auto px-6">
+            <div id="content-contact" class="tab-content max-w-screen-md mx-auto px-6 py-12">
                 <div class="flex items-center gap-3 mb-6">
                     <div class="w-8 h-[2px] bg-brandLime"></div>
                     <span class="text-brandLime font-bold text-xs uppercase tracking-wider">Contact</span>
                 </div>
-                <h2 id="title-contact" class="text-2xl sm:text-4xl font-extrabold leading-tight tracking-tight mb-6">
-                    시장의 흐름을 바꿀<br>준비가 되셨나요?
+                <h2 class="text-2xl sm:text-4xl font-extrabold leading-tight tracking-tight mb-6 text-white">
+                    시작의 흐름을 바꿀<br>준비가 되셨나요?
                 </h2>
-                <p id="desc-contact" class="text-base sm:text-lg leading-relaxed mb-10 max-w-xl">
+                <p class="text-base text-gray-400 leading-relaxed mb-10 max-w-xl">
                     제품의 잠재력을 가로막는 유입단절, 이탈 마찰력을 해소합니다. 간단한 정보를 남겨주시면 진단 검토를 진행합니다.
                 </p>
                 
                 <form onsubmit="event.preventDefault(); alert('진단 요청이 정상적으로 접수되었습니다.');" class="space-y-4 max-w-xl">
                     <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider mb-2" id="label-1">회사명 / 브랜드명</label>
-                        <input type="text" required class="w-full p-4 rounded-xl border bg-transparent focus:outline-none focus:border-brandCyan transition-colors" placeholder="예: 블루오빗">
+                        <label class="block text-xs font-bold uppercase tracking-wider mb-2 text-gray-400">회사명 / 브랜드명</label>
+                        <input type="text" required class="w-full p-4 rounded-xl border border-gray-800 bg-brandCardDark focus:outline-none focus:border-brandCyan transition-colors text-white" placeholder="예: 블루오빗">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider mb-2" id="label-2">담당자 연락처 (이메일 또는 전화번호)</label>
-                        <input type="text" required class="w-full p-4 rounded-xl border bg-transparent focus:outline-none focus:border-brandCyan transition-colors" placeholder="info@blueorbit.biz">
+                        <label class="block text-xs font-bold uppercase tracking-wider mb-2 text-gray-400">담당자 연락처 (이메일 또는 전화번호)</label>
+                        <input type="text" required class="w-full p-4 rounded-xl border border-gray-800 bg-brandCardDark focus:outline-none focus:border-brandCyan transition-colors text-white" placeholder="info@blueorbit.biz">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider mb-2" id="label-3">현재 가장 막혀있다고 느끼는 지점</label>
-                        <textarea rows="4" class="w-full p-4 rounded-xl border bg-transparent focus:outline-none focus:border-brandCyan transition-colors" placeholder="상세페이지 이탈이 심하거나, 초기 광고 반응 대비 실구매 전환이 떨어지는 문제 등"></textarea>
+                        <label class="block text-xs font-bold uppercase tracking-wider mb-2 text-gray-400">현재 가장 막혀있다고 느끼는 지점</label>
+                        <textarea rows="4" class="w-full p-4 rounded-xl border border-gray-800 bg-brandCardDark focus:outline-none focus:border-brandCyan transition-colors text-white" placeholder="상세페이지 이탈이 심하거나, 초기 광고 반응 대비 실구매 전환이 떨어지는 문제 등"></textarea>
                     </div>
-                    <button type="submit" class="w-full bg-brandCyan hover:bg-cyan-600 text-brandBlack font-extrabold p-4 rounded-xl transition-all shadow-md text-base">
+                    <button type="submit" class="w-full bg-gradient-to-r from-brandCyan to-brandLime hover:opacity-90 text-brandDarkBlue font-extrabold p-4 rounded-xl transition-all shadow-md text-base">
                         제품 판매 구조 진단 요청 제출
                     </button>
                 </form>
@@ -277,185 +257,35 @@
     </main>
 
     <!-- FOOTER -->
-    <footer id="main-footer" class="border-t py-8 transition-colors duration-500">
-        <div class="max-w-screen-md mx-auto px-6 text-left text-xs space-y-3">
-            <p id="footer-brand" class="font-bold text-sm transition-colors">BlueOrbit</p>
-            <p id="footer-text" class="transition-colors">제품 판매 구조 진단, 구매 이유 재설계<br>© 2026 BlueOrbit</p>
+    <footer class="border-t border-gray-950 py-8 bg-brandDarkBlue/30">
+        <div class="max-w-screen-md mx-auto px-6 text-left text-xs space-y-3 text-gray-500">
+            <p class="font-bold text-sm text-gray-400">BlueOrbit</p>
+            <p>제품 판매 구조 진단, 구매 이유 재설계<br>© 2026 BlueOrbit</p>
         </div>
     </footer>
 
-    <!-- INTERACTION & AUTO THEME DETECTOR -->
+    <!-- TAB ENGINE SCRIPT -->
     <script>
-        let currentTheme = 'light'; 
-
-        // 1. Time Detection (Auto Mode Shift)
-        function checkTimeAndSetTheme() {
-            const hour = new Date().getHours();
-            // Day mode: 06:00 ~ 17:59, Night mode: 18:00 ~ 05:59
-            const isNight = (hour >= 18 || hour < 6);
-            currentTheme = isNight ? 'dark' : 'light';
-            
-            applyThemeStyles();
-        }
-
-        function applyThemeStyles() {
-            const body = document.getElementById('main-body');
-            const header = document.getElementById('main-header');
-            const footer = document.getElementById('main-footer');
-            const logoText = document.getElementById('logo-text');
-            const timeBadge = document.getElementById('time-badge');
-            const footerBrand = document.getElementById('footer-brand');
-            const footerText = document.getElementById('footer-text');
-            
-            const hour = new Date().getHours();
-            const min = new Date().getMinutes();
-            const timeStr = `${hour < 10 ? '0' + hour : hour}:${min < 10 ? '0' + min : min}`;
-
-            if (currentTheme === 'light') {
-                // Light Palette Configuration
-                body.className = "bg-brandGrayBg text-gray-900 antialiased break-keep min-h-screen flex flex-col justify-between transition-colors duration-500";
-                header.className = "sticky top-0 z-50 bg-white/90 backdrop-blur-md border-gray-200 transition-colors duration-500";
-                footer.className = "bg-white border-gray-200 py-8 transition-colors duration-500";
-                logoText.className = "font-extrabold text-lg tracking-tight text-brandDarkBlue transition-colors";
-                timeBadge.className = "text-[11px] font-bold px-2.5 py-1 rounded-full bg-gray-100 border-gray-200 text-gray-600 transition-all";
-                timeBadge.innerText = `☀️ 낮 모드 자동화 (${timeStr})`;
-                footerBrand.className = "font-bold text-sm text-gray-700 transition-colors";
-                footerText.className = "text-gray-400 transition-colors";
-
-                // Tab Button Styles for Light Mode
-                document.querySelectorAll('.tab-btn').forEach(btn => {
-                    if (btn.classList.contains('active-tab')) {
-                        btn.className = "tab-btn active-tab flex-none px-4 py-3 text-center text-sm font-bold border-b-2 border-brandDarkBlue text-brandDarkBlue transition-all whitespace-nowrap";
-                    } else {
-                        btn.className = "tab-btn flex-none px-4 py-3 text-center text-sm font-medium border-b-2 border-transparent text-gray-400 hover:text-gray-600 transition-all whitespace-nowrap";
-                    }
-                });
-
-                // Main Dashboard Cards (Light Mode)
-                ['main-card-1', 'main-card-2', 'main-card-3', 'main-card-4'].forEach(id => {
-                    const el = document.getElementById(id);
-                    if(el) el.className = "p-6 rounded-2xl border bg-white border-gray-200/80 shadow-sm transition-all cursor-pointer hover:scale-[1.01]";
-                });
-
-                // Detailed elements (Light)
-                document.getElementById('main-hero-title').className = "text-3xl sm:text-5xl font-black tracking-tight leading-tight text-gray-900";
-                document.getElementById('main-hero-desc').className = "text-base sm:text-lg leading-relaxed max-w-xl mb-12 text-gray-600";
-                
-                ['title-tab1', 'title-tab2', 'title-tab3', 'title-tab4', 'title-contact'].forEach(id => {
-                    if(document.getElementById(id)) document.getElementById(id).className = "text-2xl sm:text-4xl font-extrabold leading-tight tracking-tight mb-6 text-gray-900";
-                });
-                ['desc-tab1', 'desc-tab4', 'desc-contact'].forEach(id => {
-                    if(document.getElementById(id)) document.getElementById(id).className = "text-base sm:text-lg leading-relaxed mb-10 max-w-xl text-gray-600";
-                });
-                if(document.getElementById('desc-tab2')) document.getElementById('desc-tab2').className = "text-base sm:text-lg leading-relaxed space-y-4 mb-10 max-w-xl text-gray-600";
-                
-                ['tab1-card-1', 'tab1-card-2', 'tab1-card-3'].forEach(id => {
-                    if(document.getElementById(id)) document.getElementById(id).className = "p-6 bg-white border border-gray-200/80 shadow-sm rounded-2xl transition-all";
-                });
-                ['tab3-card-1', 'tab3-card-2', 'tab3-card-3'].forEach(id => {
-                    if(document.getElementById(id)) document.getElementById(id).className = "p-5 bg-white border border-gray-200/80 shadow-sm rounded-xl flex items-center justify-between transition-all";
-                });
-                
-                ['tab1-p-1', 'tab1-p-2', 'tab1-p-3', 'tab2-p-1', 'tab2-p-2'].forEach(id => {
-                    if(document.getElementById(id)) document.getElementById(id).className = "text-sm text-gray-500";
-                });
-                if(document.getElementById('tab2-container')) document.getElementById('tab2-container').className = "p-6 sm:p-8 bg-white border border-gray-200/80 shadow-sm rounded-2xl space-y-6";
-                if(document.getElementById('tab2-hr')) document.getElementById('tab2-hr').className = "border-t border-gray-150";
-                
-                ['label-1', 'label-2', 'label-3'].forEach(id => {
-                    if(document.getElementById(id)) document.getElementById(id).className = "block text-xs font-bold uppercase tracking-wider mb-2 text-gray-600";
-                });
-                document.querySelectorAll('input, textarea').forEach(el => {
-                    el.className = "w-full p-4 rounded-xl border bg-white border-gray-200 focus:outline-none focus:border-brandCyan transition-colors";
-                });
-
-            } else {
-                // Dark Palette Configuration
-                body.className = "bg-brandBlack text-white antialiased break-keep min-h-screen flex flex-col justify-between transition-colors duration-500";
-                header.className = "sticky top-0 z-50 bg-brandBlack/90 backdrop-blur-md border-gray-900 transition-colors duration-500";
-                footer.className = "bg-brandBlack border-gray-900 py-8 transition-colors duration-500";
-                logoText.className = "font-extrabold text-lg tracking-tight text-white transition-colors";
-                timeBadge.className = "text-[11px] font-bold px-2.5 py-1 rounded-full bg-gray-900 border-gray-800 text-brandCyan transition-all";
-                timeBadge.innerText = `🌙 밤 모드 자동화 (${timeStr})`;
-                footerBrand.className = "font-bold text-sm text-gray-400 transition-colors";
-                footerText.className = "text-gray-600 transition-colors";
-
-                // Tab Button Styles for Dark Mode
-                document.querySelectorAll('.tab-btn').forEach(btn => {
-                    if (btn.classList.contains('active-tab')) {
-                        btn.className = "tab-btn active-tab flex-none px-4 py-3 text-center text-sm font-bold border-b-2 border-brandCyan text-brandCyan transition-all whitespace-nowrap";
-                    } else {
-                        btn.className = "tab-btn flex-none px-4 py-3 text-center text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-300 transition-all whitespace-nowrap";
-                    }
-                });
-
-                // Main Dashboard Cards (Dark Mode)
-                ['main-card-1', 'main-card-2', 'main-card-3', 'main-card-4'].forEach(id => {
-                    const el = document.getElementById(id);
-                    if(el) el.className = "p-6 rounded-2xl border bg-brandCardDark border-gray-900 transition-all cursor-pointer hover:scale-[1.01]";
-                });
-
-                // Detailed elements (Dark)
-                document.getElementById('main-hero-title').className = "text-3xl sm:text-5xl font-black tracking-tight leading-tight text-white";
-                document.getElementById('main-hero-desc').className = "text-base sm:text-lg leading-relaxed max-w-xl mb-12 text-gray-400";
-                
-                ['title-tab1', 'title-tab2', 'title-tab3', 'title-tab4', 'title-contact'].forEach(id => {
-                    if(document.getElementById(id)) document.getElementById(id).className = "text-2xl sm:text-4xl font-extrabold leading-tight tracking-tight mb-6 text-white";
-                });
-                ['desc-tab1', 'desc-tab4', 'desc-contact'].forEach(id => {
-                    if(document.getElementById(id)) document.getElementById(id).className = "text-base sm:text-lg leading-relaxed mb-10 max-w-xl text-gray-400";
-                });
-                if(document.getElementById('desc-tab2')) document.getElementById('desc-tab2').className = "text-base sm:text-lg leading-relaxed space-y-4 mb-10 max-w-xl text-gray-400";
-                
-                ['tab1-card-1', 'tab1-card-2', 'tab1-card-3'].forEach(id => {
-                    if(document.getElementById(id)) document.getElementById(id).className = "p-6 bg-brandCardDark border border-gray-900 rounded-2xl transition-all";
-                });
-                ['tab3-card-1', 'tab3-card-2', 'tab3-card-3'].forEach(id => {
-                    if(document.getElementById(id)) document.getElementById(id).className = "p-5 bg-brandCardDark border border-gray-900 rounded-xl flex items-center justify-between transition-all";
-                });
-                
-                ['tab1-p-1', 'tab1-p-2', 'tab1-p-3', 'tab2-p-1', 'tab2-p-2'].forEach(id => {
-                    if(document.getElementById(id)) document.getElementById(id).className = "text-sm text-gray-400";
-                });
-                if(document.getElementById('tab2-container')) document.getElementById('tab2-container').className = "p-6 sm:p-8 bg-brandCardDark border border-gray-900 rounded-2xl space-y-6";
-                if(document.getElementById('tab2-hr')) document.getElementById('tab2-hr').className = "border-t border-gray-800";
-                
-                ['label-1', 'label-2', 'label-3'].forEach(id => {
-                    if(document.getElementById(id)) document.getElementById(id).className = "block text-xs font-bold uppercase tracking-wider mb-2 text-gray-400";
-                });
-                document.querySelectorAll('input, textarea').forEach(el => {
-                    el.className = "w-full p-4 rounded-xl border bg-brandCardDark border-gray-800 focus:outline-none focus:border-brandCyan transition-colors";
-                });
-            }
-        }
-
-        // 2. Tab Switching Engine
         function switchTab(tabId) {
+            // Content Toggle
             document.querySelectorAll('.tab-content').forEach(content => {
                 content.classList.remove('active');
             });
             const targetContent = document.getElementById(`content-${tabId}`);
             if(targetContent) targetContent.classList.add('active');
 
+            // Button Highlight Control
             document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active-tab');
+                btn.className = "tab-btn flex-none px-4 py-3 text-center text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-300 transition-all whitespace-nowrap";
             });
             const targetBtn = document.getElementById(`tab-btn-${tabId}`);
             if(targetBtn) {
-                targetBtn.classList.add('active-tab');
+                targetBtn.className = "tab-btn flex-none px-4 py-3 text-center text-sm font-bold border-b-2 border-brandCyan text-brandCyan transition-all whitespace-nowrap";
                 targetBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             }
 
-            applyThemeStyles();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-
-        // 3. Initialization Execution Path
-        window.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('tab-btn-main').classList.add('active-tab');
-            checkTimeAndSetTheme();
-            setInterval(checkTimeAndSetTheme, 60000);
-        });
     </script>
 </body>
 </html>
