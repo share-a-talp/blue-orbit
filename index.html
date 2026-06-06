@@ -22,15 +22,15 @@
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
     <style>
         body { font-family: "Pretendard Variable", Pretendard, sans-serif; background-color: #0b0d1b; color: #ffffff; }
-        .tab-content { display: none; }
+        .tab-content { display: none; width: 100%; }
         .tab-content.active { display: block; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
-        /* 레퍼런스 이미지의 무한대 네온 루프 이펙트 */
-        .neon-bg {
+        /* 네온 이펙트를 개요 탭 내부에만 종속되도록 수정 */
+        #content-main .neon-bg {
             position: absolute;
-            top: 55%;
+            top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             width: 700px;
@@ -69,7 +69,7 @@
                 </div>
             </div>
 
-            <!-- Tab List (Total 6 Tabs, No Numbering) -->
+            <!-- Tab List -->
             <nav class="flex gap-1 overflow-x-auto no-scrollbar border-t border-gray-950 pt-1" role="tablist">
                 <button onclick="switchTab('main')" id="tab-btn-main" class="tab-btn flex-none px-4 py-3 text-center text-sm font-bold border-b-2 border-brandCyan text-brandCyan transition-all whitespace-nowrap" role="tab">
                     개요
@@ -94,23 +94,20 @@
     </header>
 
     <!-- MAIN CONTENT AREA -->
-    <main class="flex-grow flex items-center">
-        <div class="w-full">
+    <main class="flex-grow flex items-start pt-4">
+        <div class="w-full relative">
             
-            <!-- TAB: MAIN (레퍼런스 이미지 "image_f49ee5.png" 스타일 단독 구현) -->
-            <div id="content-main" class="tab-content active relative min-h-[75vh] flex flex-col justify-center items-center text-center px-6 overflow-hidden">
+            <!-- TAB: MAIN (개요 - 여기에만 히어로 스펙 및 네온 배경 적용) -->
+            <div id="content-main" class="tab-content active relative min-h-[70vh] flex flex-col justify-center items-center text-center px-6 overflow-hidden">
                 <div class="neon-bg"></div>
-                
-                <div class="relative z-10 max-w-3xl mx-auto space-y-6">
+                <div class="relative z-10 max-w-3xl mx-auto space-y-6 my-auto pt-12">
                     <h1 class="text-3xl sm:text-5xl font-black tracking-tight leading-[1.25] text-white">
                         지금 판매 흐름의<br>어디가 막혔는지 확인하세요
                     </h1>
-                    
                     <p class="text-gray-400 text-sm sm:text-lg font-medium max-w-xl mx-auto leading-relaxed pt-2">
                         시장이 제품을 선택하는 기준은 이미 바뀌었을 수 있습니다.<br>
                         블루오빗과 함께 구매 이유를 재설계하십시오.
                     </p>
-                    
                     <div class="pt-8">
                         <button onclick="switchTab('contact')" class="w-full sm:w-[540px] text-center bg-gradient-to-r from-brandCyan to-brandLime hover:opacity-90 text-brandDarkBlue font-black px-8 py-4 rounded-full transition-all text-base tracking-wide shadow-lg shadow-cyan-500/10">
                             제품 판매 구조 진단 요청
@@ -120,7 +117,7 @@
             </div>
 
             <!-- TAB 1: 문제 인식 -->
-            <div id="content-tab1" class="tab-content max-w-screen-md mx-auto px-6 py-12">
+            <div id="content-tab1" class="tab-content max-w-screen-md mx-auto px-6 py-8">
                 <div class="flex items-center gap-3 mb-6">
                     <div class="w-8 h-[2px] bg-brandCyan"></div>
                     <span class="text-brandCyan font-bold text-xs uppercase tracking-wider">Analysis</span>
@@ -148,7 +145,7 @@
             </div>
 
             <!-- TAB 2: 판매 구조 -->
-            <div id="content-tab2" class="tab-content max-w-screen-md mx-auto px-6 py-12">
+            <div id="content-tab2" class="tab-content max-w-screen-md mx-auto px-6 py-8">
                 <div class="flex items-center gap-3 mb-6">
                     <div class="w-8 h-[2px] bg-brandCyan"></div>
                     <span class="text-brandCyan font-bold text-xs uppercase tracking-wider">Audit</span>
@@ -176,7 +173,7 @@
             </div>
 
             <!-- TAB 3: 전략 설계 -->
-            <div id="content-tab3" class="tab-content max-w-screen-md mx-auto px-6 py-12">
+            <div id="content-tab3" class="tab-content max-w-screen-md mx-auto px-6 py-8">
                 <div class="flex items-center gap-3 mb-6">
                     <div class="w-8 h-[2px] bg-brandCyan"></div>
                     <span class="text-brandCyan font-bold text-xs uppercase tracking-wider">Architecture</span>
@@ -205,7 +202,7 @@
             </div>
 
             <!-- TAB 4: 진단 확인 -->
-            <div id="content-tab4" class="tab-content max-w-screen-md mx-auto px-6 py-12">
+            <div id="content-tab4" class="tab-content max-w-screen-md mx-auto px-6 py-8">
                 <div class="flex items-center gap-3 mb-6">
                     <div class="w-8 h-[2px] bg-brandCyan"></div>
                     <span class="text-brandCyan font-bold text-xs uppercase tracking-wider">Verification</span>
@@ -222,7 +219,7 @@
             </div>
 
             <!-- TAB 5: CONTACT (문의하기) -->
-            <div id="content-contact" class="tab-content max-w-screen-md mx-auto px-6 py-12">
+            <div id="content-contact" class="tab-content max-w-screen-md mx-auto px-6 py-8">
                 <div class="flex items-center gap-3 mb-6">
                     <div class="w-8 h-[2px] bg-brandLime"></div>
                     <span class="text-brandLime font-bold text-xs uppercase tracking-wider">Contact</span>
@@ -257,8 +254,8 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="border-t border-gray-950 py-8 bg-brandDarkBlue/30">
-        <div class="max-w-screen-md mx-auto px-6 text-left text-xs space-y-3 text-gray-500">
+    <footer class="border-t border-gray-950 py-6 bg-brandDarkBlue/30 mt-auto">
+        <div class="max-w-screen-md mx-auto px-6 text-left text-xs space-y-1 text-gray-500">
             <p class="font-bold text-sm text-gray-400">BlueOrbit</p>
             <p>제품 판매 구조 진단, 구매 이유 재설계<br>© 2026 BlueOrbit</p>
         </div>
@@ -284,7 +281,7 @@
                 targetBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             }
 
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo({ top: 0 });
         }
     </script>
 </body>
