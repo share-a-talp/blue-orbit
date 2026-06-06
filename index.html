@@ -4,157 +4,245 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BlueOrbit - 제품 판매 구조 진단</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        brandBlue: '#2563eb',
-                        brandBgDark: '#0b0f19',
-                        brandCardDark: '#111827',
+                        // 로고 images.jpg 배경색 기반의 메인 브랜드 컬러들
+                        brandDarkBlue: '#23297a', 
+                        brandCyan: '#00aeef',
+                        brandLime: '#8dc63f',
+                        brandBlack: '#0b0c16',
                     }
                 }
             }
         }
     </script>
-    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    <!-- Pretendard 폰트 -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.tailwindcss.com/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
     <style>
         body { font-family: "Pretendard Variable", Pretendard, sans-serif; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-900 antialiased break-keep">
+<body id="main-body" class="bg-gray-50 text-gray-900 antialiased break-keep transition-colors duration-300 min-h-screen flex flex-col justify-between">
 
-    <section class="max-w-screen-md mx-auto px-6 py-16 sm:py-24">
-        <div class="flex items-center gap-3 mb-6">
-            <div class="w-8 h-[2px] bg-brandBlue"></div>
-            <span class="text-brandBlue font-bold text-sm tracking-wider">01</span>
+    <!-- HEADER & PROGRESSIVE TAB NAV -->
+    <header class="sticky top-0 z-50 bg-white border-b border-gray-200 transition-colors duration-300 id-header">
+        <div class="max-w-screen-md mx-auto px-4">
+            <!-- 로고 영역 (images.jpg 톤 앤 매너 반영) -->
+            <div class="flex items-center justify-between py-4">
+                <div class="flex items-center gap-2">
+                    <!-- 임시 인피니티 로고 (SVG 그라데이션) -->
+                    <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7 9C4.79086 9 3 10.7909 3 13C3 15.2091 4.79086 17 7 17C8.73699 17 10.2222 15.8913 10.7656 14.3359L13.2344 9.6641C13.7778 8.10872 15.263 7 17 7C19.2091 7 21 8.79086 21 11C21 13.2091 19.2091 15 17 15C15.263 15 13.7778 13.8913 13.2344 12.3359L10.7656 7.6641C10.2222 6.10872 8.73699 5 7 5C4.79086 5 3 6.79086 3 9Z" stroke="url(#logo-grad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <defs>
+                            <linearGradient id="logo-grad" x1="3" y1="5" x2="21" y2="17" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#00aeef"/>
+                                <stop offset="1" stop-color="#8dc63f"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span id="logo-text" class="font-extrabold text-lg tracking-tight text-brandDarkBlue transition-colors">BLUE ORBIT</span>
+                </div>
+                <span id="theme-indicator" class="text-xs font-semibold bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full transition-colors">낮 모드</span>
+            </div>
+
+            <!-- 프로그레시브 탭 바 -->
+            <nav class="flex border-t border-gray-100" role="tablist">
+                <button onclick="switchTab(1)" id="tab-btn-1" class="tab-btn flex-1 py-3 text-center text-sm font-bold border-b-2 border-brandDarkBlue text-brandDarkBlue transition-all" role="tab">
+                    01. 문제 인식
+                </button>
+                <button onclick="switchTab(2)" id="tab-btn-2" class="tab-btn flex-1 py-3 text-center text-sm font-medium border-b-2 border-transparent text-gray-400 hover:text-gray-600 transition-all" role="tab">
+                    02. 판매 구조
+                </button>
+                <button onclick="switchTab(3)" id="tab-btn-3" class="tab-btn flex-1 py-3 text-center text-sm font-medium border-b-2 border-transparent text-gray-400 hover:text-gray-600 transition-all" role="tab">
+                    03. 전략 설계
+                </button>
+                <button onclick="switchTab(4)" id="tab-btn-4" class="tab-btn flex-1 py-3 text-center text-sm font-medium border-b-2 border-transparent text-gray-400 hover:text-gray-600 transition-all" role="tab">
+                    04. 진단 시작
+                </button>
+            </nav>
         </div>
-        
-        <h2 class="text-3xl sm:text-4xl font-extrabold leading-tight tracking-tight mb-8">
-            제품 효용성이 아닌<br>구매 욕구 자극이 문제입니다
-        </h2>
-        
-        <p class="text-gray-600 text-base sm:text-lg leading-relaxed mb-12 max-w-xl">
-            소비자의 변화하는 욕구를 따라가지 못하는 판매구조가 문제입니다. 
-            제품 개선은 소비욕구를 자극한 후에 이루어져야 합니다.
-        </p>
+    </header>
 
-        <div class="space-y-4">
-            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-gray-100">
-                <h3 class="text-xl font-bold mb-3">초기 반응 약화</h3>
-                <p class="text-gray-500 text-sm sm:text-base">초기에는 반응했지만 지금은 같은 메시지에 구매가 일어나지 않습니다.</p>
-            </div>
+    <!-- MAIN MAIN CONTENT AREA -->
+    <main class="flex-grow flex items-center">
+        <div class="w-full">
             
-            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-gray-100">
-                <h3 class="text-xl font-bold mb-3">구매 이유 흐림</h3>
-                <p class="text-gray-500 text-sm sm:text-base">고객이 왜 지금 사야 하는지 바로 이해하지 못합니다.</p>
+            <!-- TAB 01: 낮 모드 (Blue & White) -->
+            <div id="content-1" class="tab-content active max-w-screen-md mx-auto px-6 py-12 sm:py-20">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-8 h-[2px] bg-brandDarkBlue"></div>
+                    <span class="text-brandDarkBlue font-bold text-sm tracking-wider">01</span>
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold leading-tight tracking-tight mb-6 text-gray-900">
+                    제품 효용성이 아닌<br>구매 욕구 자극이 문제입니다
+                </h2>
+                <p class="text-gray-600 text-base sm:text-lg leading-relaxed mb-10 max-w-xl">
+                    소비자의 변화하는 욕구를 따라가지 못하는 판매구조가 문제입니다. 제품 개선은 소비욕구를 자극한 후에 이루어져야 합니다.
+                </p>
+                <div class="space-y-4">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                        <h3 class="text-lg font-bold mb-2 text-gray-900">초기 반응 약화</h3>
+                        <p class="text-gray-500 text-sm sm:text-base">초기에는 반응했지만 지금은 같은 메시지에 구매가 일어나지 않습니다.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                        <h3 class="text-lg font-bold mb-2 text-gray-900">구매 이유 흐림</h3>
+                        <p class="text-gray-500 text-sm sm:text-base">고객이 왜 지금 사야 하는지 바로 이해하지 못합니다.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                        <h3 class="text-lg font-bold mb-2 text-gray-900">경쟁 메시지 동조화</h3>
+                        <p class="text-gray-500 text-sm sm:text-base">경쟁사와 비슷한 설명이 반복되면 가격 비교와 이탈로 이어집니다.</p>
+                    </div>
+                </div>
             </div>
-            
-            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-gray-100">
-                <h3 class="text-xl font-bold mb-3">경쟁 메시지 동조화</h3>
-                <p class="text-gray-500 text-sm sm:text-base">경쟁사와 비슷한 설명이 반복되면 가격 비교와 이탈로 이어집니다.</p>
+
+            <!-- TAB 02: 밤 모드 (Blue & Black) -->
+            <div id="content-2" class="tab-content max-w-screen-md mx-auto px-6 py-12 sm:py-20">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-8 h-[2px] bg-brandCyan"></div>
+                    <span class="text-brandCyan font-bold text-sm tracking-wider">02</span>
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold leading-tight tracking-tight mb-6 text-white">
+                    제품을 바꾸기 전에,<br>판매 구조를 다시 점검해야 합니다.
+                </h2>
+                <div class="text-gray-400 text-base sm:text-lg leading-relaxed space-y-4 mb-10 max-w-xl">
+                    <p>블루오빗은 기능이나 디자인을 먼저 고치지 않습니다.</p>
+                    <p>고객이 제품을 어떻게 받아들이고 있는지, 왜 구매욕구가 약한지 먼저 진단합니다.</p>
+                </div>
+                <div class="bg-gray-900/50 p-6 sm:p-8 rounded-2xl border border-gray-800 space-y-6">
+                    <div>
+                        <span class="text-brandCyan font-mono text-xs block mb-1">01</span>
+                        <h3 class="text-lg font-bold mb-2 text-white">현재 반응 확인</h3>
+                        <p class="text-gray-400 text-sm">광고·상세페이지·상담 중 어디서 고객반응이 끊기는지 점검합니다.</p>
+                    </div>
+                    <hr class="border-gray-800">
+                    <div>
+                        <span class="text-brandCyan font-mono text-xs block mb-1">02</span>
+                        <h3 class="text-lg font-bold mb-2 text-white">구매 이유 추출</h3>
+                        <p class="text-gray-400 text-sm">실제 구매 고객이 어떤 말에 반응했는지, 무엇이 결정을 만들었는지 확인합니다.</p>
+                    </div>
+                </div>
             </div>
+
+            <!-- TAB 03: 밤 모드 (Blue & Black) -->
+            <div id="content-3" class="tab-content max-w-screen-md mx-auto px-6 py-12 sm:py-20">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-8 h-[2px] bg-brandCyan"></div>
+                    <span class="text-brandCyan font-bold text-sm tracking-wider">03</span>
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold leading-tight tracking-tight mb-6 text-white">
+                    진단 결과로<br>판매 전략 구조를<br>새롭게 설계합니다
+                </h2>
+                <div class="text-brandCyan text-base sm:text-lg leading-relaxed space-y-2 mb-10 max-w-xl font-medium">
+                    <p>블루오빗은 제품에 대한 관점을 바꾸어 시장이 먼저 찾는 이유를 만들어 드립니다.</p>
+                    <p>시장이 자연스럽게 제품에 집중하도록 바로 실행 가능한 액션을 함께 만들어 드립니다.</p>
+                </div>
+                <div class="space-y-3">
+                    <div class="bg-gray-900/60 p-5 rounded-xl border border-gray-800 flex items-center justify-between">
+                        <span class="text-white font-bold text-base">01. 반응 구조 진단</span>
+                        <span class="text-brandCyan text-xs">▲ DIAGNOSIS</span>
+                    </div>
+                    <div class="bg-gray-900/60 p-5 rounded-xl border border-gray-800 flex items-center justify-between">
+                        <span class="text-white font-bold text-base">02. 구매 이유 재정의</span>
+                        <span class="text-brandCyan text-xs">▲ REDEFINE</span>
+                    </div>
+                    <div class="bg-gray-900/60 p-5 rounded-xl border border-gray-800 flex items-center justify-between">
+                        <span class="text-white font-bold text-base">03. 판매 전략 구조 설계</span>
+                        <span class="text-brandLime text-xs">✔ ARCHITECTURE</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 04: 밤 모드 (Blue & Black) -->
+            <div id="content-4" class="tab-content max-w-screen-md mx-auto px-6 py-12 sm:py-20">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-8 h-[2px] bg-brandCyan"></div>
+                    <span class="text-brandCyan font-bold text-sm tracking-wider">04</span>
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold leading-tight tracking-tight mb-6 text-white">
+                    지금 판매 흐름의<br>어디가 막혔는지,<br>먼저 확인해보세요
+                </h2>
+                <p class="text-gray-400 text-base sm:text-lg leading-relaxed mb-8 max-w-xl">
+                    시장이 제품 선택하는 기준이 바뀌었을 수 있습니다. 구매 이유와 판매 흐름을 진단하고, 실행 전략을 함께 제안합니다.
+                </p>
+                <div class="mb-6">
+                    <a href="#" class="inline-block w-full sm:w-auto text-center bg-brandCyan hover:bg-cyan-600 text-brandBlack font-extrabold px-8 py-4 rounded-xl transition-all shadow-lg shadow-cyan-500/20 text-base">
+                        제품 판매 구조 진단 요청
+                    </a>
+                </div>
+            </div>
+
         </div>
-    </section>
+    </main>
 
-    <div class="bg-brandBgDark text-white">
-        
-        <section class="max-w-screen-md mx-auto px-6 py-16 sm:py-24 border-b border-gray-800">
-            <div class="flex items-center gap-3 mb-6">
-                <div class="w-8 h-[2px] bg-brandBlue"></div>
-                <span class="text-brandBlue font-bold text-sm tracking-wider">02</span>
-            </div>
-            
-            <h2 class="text-3xl sm:text-4xl font-extrabold leading-tight tracking-tight mb-8">
-                제품을 바꾸기 전에,<br>판매 구조를 다시 점검해야 합니다.
-            </h2>
-            
-            <div class="text-gray-400 text-base sm:text-lg leading-relaxed space-y-4 mb-12 max-w-xl">
-                <p>블루오빗은 기능이나 디자인을 먼저 고치지 않습니다.</p>
-                <p>고객이 제품을 어떻게 받아들이고 있는지, 왜 구매욕구가 약한지 먼저 진단합니다.</p>
-            </div>
+    <!-- FOOTER -->
+    <footer id="main-footer" class="bg-white border-t border-gray-200 py-8 transition-colors duration-300">
+        <div class="max-w-screen-md mx-auto px-6 text-left text-xs text-gray-400 space-y-3">
+            <p class="font-bold text-gray-600 text-sm transition-colors id-footer-brand">BlueOrbit</p>
+            <p>제품 판매 구조 진단, 구매 이유 재설계<br>© 2026 BlueOrbit</p>
+        </div>
+    </footer>
 
-            <div class="bg-brandCardDark p-6 sm:p-8 rounded-2xl border border-gray-800 space-y-8">
-                <div>
-                    <span class="text-brandBlue font-mono text-xs block mb-1">01</span>
-                    <h3 class="text-lg font-bold mb-2">현재 반응 확인</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">광고·상세페이지·상담 중 어디서 고객반응이 끊기는지 점검합니다.</p>
-                </div>
-                <hr class="border-gray-800">
-                <div>
-                    <span class="text-brandBlue font-mono text-xs block mb-1">02</span>
-                    <h3 class="text-lg font-bold mb-2">구매 이유 추출</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">실제 구매 고객이 어떤 말에 반응했는지, 무엇이 결정을 만들었는지 확인합니다.</p>
-                </div>
-            </div>
-        </section>
+    <!-- INTERACTION SCRIPT -->
+    <script>
+        function switchTab(tabIndex) {
+            // 1. 모든 컨텐츠 숨기기
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            // 2. 선택한 컨텐츠 보이기
+            document.getElementById(`content-${tabIndex}`).classList.add('active');
 
-        <section class="max-w-screen-md mx-auto px-6 py-16 sm:py-24 border-b border-gray-800">
-            <div class="flex items-center gap-3 mb-6">
-                <div class="w-8 h-[2px] bg-brandBlue"></div>
-                <span class="text-brandBlue font-bold text-sm tracking-wider">03</span>
-            </div>
-            
-            <h2 class="text-3xl sm:text-4xl font-extrabold leading-tight tracking-tight mb-8">
-                진단 결과로<br>판매 전략 구조를<br>새롭게 설계합니다
-            </h2>
-            
-            <div class="text-blue-400 text-base sm:text-lg leading-relaxed space-y-2 mb-12 max-w-xl font-medium">
-                <p>블루오빗은 제품에 대한 관점을 바꾸어 시장이 먼저 찾는 이유를 만들어 드립니다.</p>
-                <p>시장이 자연스럽게 제품에 집중하도록 바로 실행 가능한 액션을 함께 만들어 드립니다.</p>
-            </div>
+            // 3. 네비게이션 버튼 스타일 초기화 및 적용
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('border-brandDarkBlue', 'text-brandDarkBlue', 'border-brandCyan', 'text-brandCyan', 'font-bold');
+                btn.classList.add('border-transparent', 'text-gray-400', 'font-medium');
+            });
 
-            <div class="space-y-4">
-                <div class="bg-brandCardDark p-6 rounded-xl border border-gray-800">
-                    <span class="text-gray-500 font-mono text-xs block mb-1">01</span>
-                    <h3 class="text-base font-bold">반응 구조 진단</h3>
-                </div>
-                <div class="bg-brandCardDark p-6 rounded-xl border border-gray-800">
-                    <span class="text-gray-500 font-mono text-xs block mb-1">02</span>
-                    <h3 class="text-base font-bold">구매 이유 재정의</h3>
-                </div>
-                <div class="bg-brandCardDark p-6 rounded-xl border border-gray-800">
-                    <span class="text-gray-500 font-mono text-xs block mb-1">03</span>
-                    <h3 class="text-base font-bold">판매 전략 구조 설계</h3>
-                </div>
-            </div>
-        </section>
+            const activeBtn = document.getElementById(`tab-btn-${tabIndex}`);
+            activeBtn.classList.remove('border-transparent', 'text-gray-400', 'font-medium');
+            activeBtn.classList.add('font-bold');
 
-        <section class="max-w-screen-md mx-auto px-6 py-16 sm:py-24 text-center sm:text-left">
-            <div class="flex items-center justify-center sm:justify-start gap-3 mb-6">
-                <div class="w-8 h-[2px] bg-brandBlue"></div>
-                <span class="text-brandBlue font-bold text-sm tracking-wider">04</span>
-            </div>
-            
-            <h2 class="text-3xl sm:text-4xl font-extrabold leading-tight tracking-tight mb-6">
-                지금 판매 흐름의<br class="sm:hidden"> 어디가 막혔는지,<br>먼저 확인해보세요
-            </h2>
-            
-            <p class="text-gray-400 text-base sm:text-lg leading-relaxed mb-10 max-w-xl mx-auto sm:mx-0">
-                시장이 제품 선택하는 기준이 바뀌었을 수 있습니다.<br>
-                구매 이유와 판매 흐름을 진단하고, 실행 전략을 함께 제안합니다.
-            </p>
+            // 4. 낮/밤 모드 테마 스위칭 로직 (1번은 낮, 2~4번은 밤)
+            const body = document.getElementById('main-body');
+            const header = document.querySelector('header');
+            const footer = document.getElementById('main-footer');
+            const logoText = document.getElementById('logo-text');
+            const footerBrand = document.querySelector('.id-footer-brand');
+            const themeIndicator = document.getElementById('theme-indicator');
 
-            <div class="mb-20">
-                <a href="#" class="inline-block w-full sm:w-auto text-center bg-brandBlue hover:bg-blue-700 text-white font-bold px-8 py-4 rounded-xl transition-all shadow-lg shadow-blue-900/40 text-base">
-                    제품 판매 구조 진단 요청
-                </a>
-            </div>
-
-            <footer class="text-left text-xs text-gray-500 border-t border-gray-800 pt-8 space-y-4">
-                <p class="font-semibold text-gray-400 text-sm">BlueOrbit</p>
-                <p>제품 판매 구조 진단, 구매 이유 재설계<br>© 2026 BlueOrbit</p>
-                <div class="flex gap-4 text-gray-600 pt-2">
-                    <span>문제 인식</span>
-                    <span>진단 구조</span>
-                    <span>서비스 구조</span>
-                    <span>진단 시작</span>
-                </div>
-            </footer>
-        </section>
-
-    </div>
-
+            if (tabIndex === 1) {
+                // 낮 모드 테마 적용 (White & Light Gray)
+                body.className = "bg-gray-50 text-gray-900 antialiased break-keep transition-colors duration-300 min-h-screen flex flex-col justify-between";
+                header.className = "sticky top-0 z-50 bg-white border-b border-gray-250 transition-colors duration-300";
+                footer.className = "bg-white border-t border-gray-200 py-8 transition-colors duration-300";
+                logoText.className = "font-extrabold text-lg tracking-tight text-brandDarkBlue transition-colors";
+                if(footerBrand) footerBrand.className = "font-bold text-gray-600 text-sm transition-colors id-footer-brand";
+                
+                themeIndicator.innerText = "낮 모드";
+                themeIndicator.className = "text-xs font-semibold bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full transition-colors";
+                
+                activeBtn.classList.add('border-brandDarkBlue', 'text-brandDarkBlue');
+            } else {
+                // 밤 모드 테마 적용 (Dark Blue & Deep Black)
+                body.className = "bg-brandBlack text-white antialiased break-keep transition-colors duration-300 min-h-screen flex flex-col justify-between";
+                header.className = "sticky top-0 z-50 bg-brandBlack/90 backdrop-blur-md border-b border-gray-900 transition-colors duration-300";
+                footer.className = "bg-brandBlack border-t border-gray-900 py-8 transition-colors duration-300";
+                logoText.className = "font-extrabold text-lg tracking-tight text-white transition-colors";
+                if(footerBrand) footerBrand.className = "font-bold text-gray-400 text-sm transition-colors id-footer-brand";
+                
+                themeIndicator.innerText = "밤 모드";
+                themeIndicator.className = "text-xs font-semibold bg-gray-900 text-brandCyan px-2.5 py-1 rounded-full transition-colors";
+                
+                activeBtn.classList.add('border-brandCyan', 'text-brandCyan');
+            }
+        }
+    </script>
 </body>
 </html>
