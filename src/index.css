@@ -1,0 +1,51 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bo-bg: #0b0d1b;
+  --bo-card: #13162c;
+  --bo-card-hover: #161a33;
+  --bo-cyan: #00aeef;
+  --bo-lime: #8dc63f;
+  --bo-text: #ffffff;
+  --bo-muted: rgba(255, 255, 255, 0.55);
+  --bo-muted-light: rgba(255, 255, 255, 0.4);
+  --bo-border: rgba(255, 255, 255, 0.08);
+  --bo-border-cyan: rgba(0, 174, 239, 0.25);
+  --bo-border-divider: rgba(255, 255, 255, 0.06);
+  --bo-font: "Pretendard Variable", Pretendard, -apple-system, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--bo-font);
+  background: var(--bo-bg);
+  color: var(--bo-text);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+button {
+  font-family: var(--bo-font);
+  cursor: pointer;
+}
+
+input,
+textarea {
+  font-family: var(--bo-font);
+}

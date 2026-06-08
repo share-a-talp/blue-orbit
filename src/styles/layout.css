@@ -1,0 +1,146 @@
+.bo-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(11, 13, 27, 0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--bo-border-divider);
+}
+
+.bo-header-inner {
+  max-width: 768px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.bo-logo-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+}
+
+.bo-logo-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: var(--bo-text);
+}
+
+.bo-logo-text {
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: var(--bo-text);
+}
+
+.bo-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(0, 174, 239, 0.1);
+  border: 1px solid rgba(0, 174, 239, 0.25);
+  color: var(--bo-cyan);
+  letter-spacing: 0.06em;
+}
+
+/* ── Main ── */
+.bo-main {
+  flex: 1;
+}
+
+/* ── Section 공통 ── */
+.bo-section {
+  max-width: 768px;
+  margin: 0 auto;
+  padding: 40px 20px 64px;
+}
+
+.bo-section h2 {
+  font-size: clamp(24px, 5vw, 40px);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: var(--bo-text);
+  margin-bottom: 16px;
+}
+
+.bo-section-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.bo-label-line {
+  width: 28px;
+  height: 2px;
+  background: var(--bo-cyan);
+}
+
+.bo-label-line.lime {
+  background: var(--bo-lime);
+}
+
+.bo-label-text {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--bo-cyan);
+}
+
+.bo-label-text.lime {
+  color: var(--bo-lime);
+}
+
+.bo-section-copy {
+  font-size: 15px;
+  color: var(--bo-muted);
+  line-height: 1.8;
+  margin-bottom: 32px;
+  max-width: 560px;
+}
+
+.bo-divider {
+  height: 1px;
+  background: var(--bo-border-divider);
+  margin: 40px 0;
+}
+
+/* ── Footer ── */
+.bo-footer {
+  border-top: 1px solid var(--bo-border-divider);
+  padding: 28px 20px;
+  background: rgba(11, 13, 27, 0.6);
+  margin-top: auto;
+}
+
+.bo-footer-inner {
+  max-width: 768px;
+  margin: 0 auto;
+}
+
+.bo-footer strong {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.5);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.bo-footer p {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.3);
+  line-height: 1.7;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .bo-section {
+    padding: 32px 16px 56px;
+  }
+}

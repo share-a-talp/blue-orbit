@@ -1,0 +1,35 @@
+.bo-tabs {
+  display: flex;
+  gap: 2px;
+  overflow-x: auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 2px;
+  scrollbar-width: none;
+}
+
+.bo-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.bo-tab-btn {
+  flex: none;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  border: none;
+  background: none;
+  color: rgba(255, 255, 255, 0.4);
+  border-bottom: 2px solid transparent;
+  transition: color 160ms, border-color 160ms;
+  white-space: nowrap;
+}
+
+.bo-tab-btn:hover {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.bo-tab-btn.active {
+  color: var(--bo-cyan);
+  border-bottom-color: var(--bo-cyan);
+  font-weight: 700;
+}
